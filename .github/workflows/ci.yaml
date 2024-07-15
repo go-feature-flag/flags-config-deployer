@@ -1,0 +1,19 @@
+name: "GO Feature Flag linting"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  lint-flag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: data_export_file
+        uses: go-feature-flag/gofeatureflag-lint-action@v1
+        with:
+          flag-file: ./flags/flags.goff.yaml

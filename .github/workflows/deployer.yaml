@@ -1,0 +1,26 @@
+name: "Deploy to S3"
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-flag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: data_export_file
+        uses: go-feature-flag/gofeatureflag-lint-action@v1
+        with:
+          flag-file: ./flags/flags.goff.yaml
+
+      - uses: keithweaver/aws-s3-github-action@v1.0.0
+        with:
+          command: cp
+          source: ./flags/flags.goff.yaml
+          destination: s3://${{ secrets.AWS_CONF_BUCKET }}/${{ secrets.AWS_CONF_BUCKET_FOLDER }}/flags.goff.yaml
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: eu-west-1
