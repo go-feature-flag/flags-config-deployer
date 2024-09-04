@@ -8,7 +8,7 @@ app-enable-query-builder:
   defaultRule:
     variation: disabled
 
-app-enable-rollout-configuration:
+app-enable-rollout-tab:
   variations:
     enabled: true
     disabled: false
