@@ -12,8 +12,8 @@ app-enable-rollout-tab:
   variations:
     enabled: true
     disabled: false
-  # targeting:
-  #   - query: targetingKey eq "28d977e9-c32b-45c9-8ef9-e6076d53efa6"
-  #     variation: enabled
+  targeting:
+    - query: targetingKey eq "28d977e9-c32b-45c9-8ef9-e6076d53efa6"
+      variation: enabled
   defaultRule:
     variation: disabled
