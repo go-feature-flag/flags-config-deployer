@@ -6,6 +6,10 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened ]
 
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read
+
 jobs:
   lint-flag:
     runs-on: ubuntu-latest
@@ -17,3 +21,11 @@ jobs:
         uses: go-feature-flag/gofeatureflag-lint-action@v1
         with:
           flag-file: ./flags/flags.goff.yaml
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: eu-west-1
+          role-to-assume: arn:aws:iam::763196386653:role/goff_deployer_role
+          role-session-name: gha-flags-deployer-session
+
+      - run: aws s3 ls go-feature-flag
